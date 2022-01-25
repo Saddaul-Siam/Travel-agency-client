@@ -15,7 +15,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/blog/:id" element={<SingleBlogDetails />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/login" element={<Register />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

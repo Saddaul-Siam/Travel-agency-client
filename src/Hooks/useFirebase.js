@@ -1,5 +1,15 @@
 import { useState, useEffect } from "react";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+  getIdToken,
+} from "firebase/auth";
 import initializeFirebase from "../Firebase/Firebase.init";
 
 initializeFirebase();
@@ -23,81 +33,85 @@ const useFirebase = () => {
         setUser(newUser);
 
         // save user to the database
-        saveUser(email, name, 'POST');
+        saveUser(email, name, "POST");
 
         // send name to firebase after creation
         updateProfile(auth.currentUser, {
-          displayName: name
-        }).then(() => { }).catch((error) => { });
-        history.replace('/');
+          displayName: name,
+        })
+          .then(() => {})
+          .catch((error) => {});
+        history.replace("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setAuthError(errorMessage)
+        setAuthError(errorMessage);
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLoading(false));
   };
 
   // login user
   const loginUser = (email, password, location, history) => {
-    setIsLoading(true)
+    setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setAuthError("");
-        const destination = location?.state?.from || '/';
-        history.replace(destination)
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
       })
       .catch((error) => {
         const errorMessage = error.message;
-        setAuthError(errorMessage)
+        setAuthError(errorMessage);
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLoading(false));
   };
 
   // sign In With Google
-  const signInWithGoogle = (location, history) => {
-    setIsLoading(true)
+  const signInWithGoogle = (location, navigate) => {
+    setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const user = result.user;
 
         // save to database
-        saveUser(user.email, user.displayName, 'PUT');
+        saveUser(user.email, user.displayName, "PUT");
         setAuthError("");
-        const destination = location?.state?.from || '/';
-        history.replace(destination)
-      }).catch((error) => {
-        setAuthError(error.message)
+        const destination = location?.state?.from || "/";
+        navigate(destination);
       })
-      .finally(() => setIsLoading(false))
-  }
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
-  // onAuthStateChanged 
+  // onAuthStateChanged
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        getIdToken(user)
-          .then(idToken => {
-            localStorage.setItem('idToken', idToken);
-          })
+        getIdToken(user).then((idToken) => {
+          localStorage.setItem("idToken", idToken);
+        });
       } else {
-        setUser({})
+        setUser({});
       }
-      setIsLoading(false)
+      setIsLoading(false);
     });
-    return () => unsubscribe
+    return () => unsubscribe;
   }, [auth]);
 
   // log out user
   const logOut = () => {
-    setIsLoading(true)
-    signOut(auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      setAuthError(error.message)
-    })
-      .finally(() => setIsLoading(false))
+    setIsLoading(true);
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        setAuthError(error.message);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   // save user information
@@ -105,18 +119,18 @@ const useFirebase = () => {
     const user = { email, displayName };
     fetch(`https://bike-buzz.herokuapp.com/users`, {
       method: method,
-      headers: { 'content-Type': 'application/json' },
-      body: JSON.stringify(user)
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify(user),
     })
-      .then(res => res.json())
-      .then(result => console.log(result))
+      .then((res) => res.json())
+      .then((result) => console.log(result));
   };
 
   useEffect(() => {
     fetch(`https://bike-buzz.herokuapp.com/users/${user.email}`)
-      .then(res => res.json())
-      .then(data => setAdmin(data.admin))
-  }, [user.email])
+      .then((res) => res.json())
+      .then((data) => setAdmin(data.admin));
+  }, [user.email]);
 
   return {
     user,
@@ -129,7 +143,7 @@ const useFirebase = () => {
     setIsLoading,
     signInWithGoogle,
     logOut,
-  }
-}
+  };
+};
 
 export default useFirebase;
