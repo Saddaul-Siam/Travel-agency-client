@@ -190,6 +190,9 @@ export default function Navigation() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Link to="/addExperience">
+              <IconButton color="inherit">Add Experience</IconButton>
+            </Link>
             <Link to="/login">
               <IconButton color="inherit">login</IconButton>
             </Link>
@@ -199,9 +202,7 @@ export default function Navigation() {
             <Button onClick={logOut} color="inherit">
               logout
             </Button>
-            <Button onClick={logOut} color="inherit">
-              {user.email}
-            </Button>
+            {user.email && <Button color="inherit">{user.displayName}</Button>}
             <IconButton
               size="large"
               aria-label="show 4 new mails"

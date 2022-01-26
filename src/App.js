@@ -6,6 +6,7 @@ import AuthProvider from "./Context/AuthProvider";
 import Login from "./pages/Login/Login/Login";
 import Register from "./pages/Login/Register/Register";
 import AddExperience from "./pages/Home/AddExperience/AddExperience";
+import PrivateRoute from "./pages/Login/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
           <Route path="/blog/:id" element={<SingleBlogDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addExperience" element={<AddExperience />} />
+          <Route
+            path="/addExperience"
+            element={
+              <PrivateRoute>
+                <AddExperience />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
