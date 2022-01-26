@@ -195,7 +195,7 @@ export default function Navigation(props) {
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <Link to="/addExperience">
+                <Link to="/dashboard/addExperience">
                   <IconButton color="inherit">Add Experience</IconButton>
                 </Link>
                 <Link to="/login">

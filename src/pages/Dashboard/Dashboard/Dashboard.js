@@ -6,13 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { Outlet } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import { Link, Outlet } from "react-router-dom";
+import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
 
 const drawerWidth = 240;
 
@@ -26,7 +25,7 @@ export default function Dashboard() {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-          TRAVEL AGENCY
+            TRAVEL AGENCY
           </Typography>
         </Toolbar>
       </AppBar>
@@ -44,25 +43,36 @@ export default function Dashboard() {
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
+            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+              <ListItem button>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText>Home</ListItemText>
               </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
+            </Link>
+            <Link
+              to="/dashboard/addExperience"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <DepartureBoardIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText>Add Experience</ListItemText>
               </ListItem>
-            ))}
+            </Link>
+            <Link
+              to="/dashboard/myExperience"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <DepartureBoardIcon />
+                </ListItemIcon>
+                <ListItemText>My Experience</ListItemText>
+              </ListItem>
+            </Link>
           </List>
         </Box>
       </Drawer>
