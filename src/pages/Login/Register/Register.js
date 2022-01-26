@@ -6,7 +6,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 // import login from '../../../images/login.png'
 import { NavLink, useNavigate } from "react-router-dom";
@@ -34,6 +34,12 @@ const Register = () => {
     registerUser(loginData.email, loginData.password, loginData.name, navigate);
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (user.emailVerified) {
+      navigate("/");
+    }
+  }, [user.emailVerified, navigate]);
 
   return (
     <>
@@ -97,8 +103,11 @@ const Register = () => {
               </form>
             }
             {isLoading && <CircularProgress />}
+            {user.emailVerified && (
+              <Alert severity="success">Email verify successful</Alert>
+            )}
             {user.email && (
-              <Alert severity="success"> User account create successful</Alert>
+              <Alert severity="warning">Please check your email & verify</Alert>
             )}
             {authError && <Alert severity="error">{authError}</Alert>}
           </Grid>

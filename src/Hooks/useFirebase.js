@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   updateProfile,
   getIdToken,
+  sendEmailVerification,
 } from "firebase/auth";
 import initializeFirebase from "../Firebase/Firebase.init";
 
@@ -19,15 +20,15 @@ const useFirebase = () => {
   const [authError, setAuthError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
-
   const googleProvider = new GoogleAuthProvider();
   const auth = getAuth();
 
   // register user
-  const registerUser = (email, password, name, history) => {
+  const registerUser = (email, password, name, navigate) => {
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        emailVerification();
         setAuthError("");
         const newUser = { email, displayName: name };
         setUser(newUser);
@@ -41,7 +42,7 @@ const useFirebase = () => {
         })
           .then(() => {})
           .catch((error) => {});
-        history.replace("/");
+        // navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -112,6 +113,11 @@ const useFirebase = () => {
         setAuthError(error.message);
       })
       .finally(() => setIsLoading(false));
+  };
+
+  // sendEmailVerification
+  const emailVerification = () => {
+    sendEmailVerification(auth.currentUser).then(() => {});
   };
 
   // save user information
