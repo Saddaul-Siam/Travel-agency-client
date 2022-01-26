@@ -73,6 +73,39 @@ export default function Dashboard() {
                 <ListItemText>My Experience</ListItemText>
               </ListItem>
             </Link>
+            <Link
+              to="/dashboard/myExperience"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <DepartureBoardIcon />
+                </ListItemIcon>
+                <ListItemText>All Blog Posts</ListItemText>
+              </ListItem>
+            </Link>
+            <Link
+              to="/dashboard/myExperience"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <DepartureBoardIcon />
+                </ListItemIcon>
+                <ListItemText>Create Blog Posts</ListItemText>
+              </ListItem>
+            </Link>
+            <Link
+              to="/dashboard/myExperience"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <DepartureBoardIcon />
+                </ListItemIcon>
+                <ListItemText>Make Admin</ListItemText>
+              </ListItem>
+            </Link>
           </List>
         </Box>
       </Drawer>
