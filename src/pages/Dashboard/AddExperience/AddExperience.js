@@ -11,14 +11,32 @@ import { useForm } from "react-hook-form";
 import Navigation from "../../Shared/Navigation/Navigation";
 import Footer from "../../Shared/Footer/Footer";
 import { Box } from "@mui/system";
+import useAuth from "../../../Hooks/useAuth";
 
 const AddExperience = () => {
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    data.userEmail = user.email;
+    data.status = "pending";
+    fetch(`http://localhost:5000/addBlogPost`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          reset();
+        }
+      });
+  };
 
   return (
     <>
@@ -30,7 +48,6 @@ const AddExperience = () => {
           elevation={3}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <Typography variant="body2" sx={{ pt: 3 }}></Typography> */}
             <TextField
               required
               id="outlined-basic"
@@ -40,6 +57,16 @@ const AddExperience = () => {
               type="text"
               variant="outlined"
               {...register("name", { required: true })}
+            />
+            <TextField
+              required
+              id="outlined-basic"
+              sx={{ width: "100%", my: 3, backgroundColor: "#fff" }}
+              name="phone"
+              variant="outlined"
+              type="text"
+              label="Category"
+              {...register("category", { required: true })}
             />
             <Grid container spacing={5}>
               <Grid item xs={12} md={6}>

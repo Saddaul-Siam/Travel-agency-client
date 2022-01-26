@@ -8,6 +8,7 @@ import Register from "./pages/Login/Register/Register";
 import AddExperience from "./pages/Dashboard/AddExperience/AddExperience";
 import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
 import MyExperience from "./pages/Dashboard/MyExperience/MyExperience";
+import MakeAdmin from "./pages/Dashboard/MakeAdmin/MakeAdmin";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               element={<AddExperience />}
             />
             <Route path="/dashboard/myExperience" element={<MyExperience />} />
+            <Route path="/dashboard/makeAdmin" element={<MakeAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

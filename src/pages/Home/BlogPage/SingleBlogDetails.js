@@ -1,39 +1,41 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "../../Shared/Navigation/Navigation";
+import { useParams } from "react-router-dom";
+import Footer from "../../Shared/Footer/Footer";
 import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import Rating from "react-rating";
+
 const SingleBlogDetails = () => {
+  const { id } = useParams();
+  const [blog, setBlog] = useState({});
+  useEffect(() => {
+    fetch(`http://localhost:5000/getSingleBlogPost/${id}`)
+      .then((result) => result.json())
+      .then((data) => setBlog(data));
+  }, [id]);
   return (
     <>
       <Navigation />
       <Container sx={{ py: 5 }}>
         <Grid container spacing={4}>
           <Grid item xs={8}>
-            <img
-              width="100%"
-              src="https://gotravel.qodeinteractive.com/wp-content/uploads/2016/04/blog-image-1.jpg"
-              alt=""
-            />
+            <img width="100%" src={blog.img} alt="" />
             <Typography sx={{ fontWeight: 700, fontSize: 16, py: 2 }}>
-              Santorini Have Conquered a Corner of Your Imagination Before
-              You’ve Set Eyes On It.
+              {blog.name}
             </Typography>
-            <Typography>April 5, 2016, Bangladesh </Typography>
-            <Typography>Cost: 5000 </Typography>
+            <Typography>{blog.date} </Typography>
+            <Typography>Cost: {blog.cost} </Typography>
             <Typography sx={{ pb: 1 }}>
-              <StarIcon />
-              <StarIcon />
-              <StarIcon />
-              <StarIcon />
+              <Rating
+                readonly
+                initialRating={blog.rating}
+                emptySymbol={<StarBorderIcon sx={{ color: "#FFC107" }} />}
+                fullSymbol={<StarIcon sx={{ color: "#FFC107" }} />}
+              />
             </Typography>
-            <Typography>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae
-              illo eum ipsum rem expedita ad odit quisquam atque, est quis
-              molestiae unde, aut dolorum error cumque rerum suscipit earum
-              temporibus omnis commodi. Eveniet, dolores voluptate cupiditate
-              ipsa culpa voluptatem quos, dolorum, ipsam facere omnis ex!
-              Tempora atque quidem repellendus reiciendis.
-            </Typography>
+            <Typography>{blog.description}</Typography>
           </Grid>
           <Grid item xs={4}>
             <Typography sx={{ fontWeight: 700, fontSize: 16, pb: 3 }}>
@@ -53,6 +55,7 @@ const SingleBlogDetails = () => {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 };

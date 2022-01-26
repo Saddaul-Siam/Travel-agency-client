@@ -1,58 +1,27 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import React, { useEffect, useState } from "react";
+
 import Grid from "@mui/material/Grid";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import Blog from "./Blog";
+import { Link } from "react-router-dom";
 
 const Blogs = () => {
+  const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    fetch(`http://localhost:5000/getAllBlogPost`)
+      .then((res) => res.json())
+      .then((data) => setBlogs(data));
+  }, []);
   return (
     <Container sx={{ py: 5 }}>
       <Grid container spacing={4}>
-        <Grid item xs={4}>
-          <Paper>
-            <img
-              width="100%"
-              height="300px"
-              src="https://gotravel.qodeinteractive.com/wp-content/uploads/2016/04/blog-image-1.jpg"
-              alt=""
-            />
-            <Box sx={{ m: 3, pb: 3 }}>
-              <Typography sx={{ fontWeight: 700, fontSize: "20px" }}>
-                Santorini Have Conquered a Corner of Your Imagination Before
-              </Typography>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper>
-            <img
-              width="100%"
-              height="300px"
-              src="https://gotravel.qodeinteractive.com/wp-content/uploads/2016/04/blog-image-2.jpg"
-              alt=""
-            />
-            <Box sx={{ m: 3, pb: 3 }}>
-              <Typography sx={{ fontWeight: 700, fontSize: "20px" }}>
-                Santorini Have Conquered a Corner of Your Imagination Before
-              </Typography>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper>
-            <img
-              width="100%"
-              height="300px"
-              src="https://gotravel.qodeinteractive.com/wp-content/uploads/2016/04/blog-image-6.jpg"
-              alt=""
-            />
-            <Box sx={{ m: 3, pb: 3 }}>
-              <Typography sx={{ fontWeight: 700, fontSize: "20px" }}>
-                Santorini Have Conquered a Corner of Your Imagination Before
-              </Typography>
-            </Box>
-          </Paper>
-        </Grid>
+        {blogs.map((blog) => (
+          <Grid item xs={12} md={4} key={blog._id}>
+            <Link to={`/blog/${blog._id}`} style={{ textDecoration: "none" }}>
+              <Blog blog={blog} />
+            </Link>
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );

@@ -123,7 +123,7 @@ const useFirebase = () => {
   // save user information
   const saveUser = (email, displayName, method) => {
     const user = { email, displayName };
-    fetch(`https://bike-buzz.herokuapp.com/users`, {
+    fetch(`http://localhost:5000/users`, {
       method: method,
       headers: { "content-Type": "application/json" },
       body: JSON.stringify(user),

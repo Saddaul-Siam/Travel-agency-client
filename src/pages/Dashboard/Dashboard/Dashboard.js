@@ -96,7 +96,7 @@ export default function Dashboard() {
               </ListItem>
             </Link>
             <Link
-              to="/dashboard/myExperience"
+              to="/dashboard/makeAdmin"
               style={{ textDecoration: "none", color: "black" }}
             >
               <ListItem button>
