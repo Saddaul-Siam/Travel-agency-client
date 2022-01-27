@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import Grid from "@mui/material/Grid";
-import { Box, Container, Pagination, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Blog from "./Blog";
 import { Link } from "react-router-dom";
 
@@ -40,6 +47,13 @@ const Blogs = () => {
       >
         Your Latest Blog
       </Typography>
+      {blogs.length ? (
+        ""
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "center", pt: 5 }}>
+          <CircularProgress />
+        </Box>
+      )}
       <Grid container spacing={4}>
         {blogs.map((blog) => (
           <Grid item xs={12} md={4} key={blog._id}>

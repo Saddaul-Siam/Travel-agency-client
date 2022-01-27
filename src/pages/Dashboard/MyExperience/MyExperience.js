@@ -1,4 +1,11 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Paper,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
@@ -76,7 +83,13 @@ const MyExperience = () => {
           Available blogs : {blogs.length}
         </Typography>
       )}
-
+      {blogs.length ? (
+        ""
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "center", pt: 5 }}>
+          <CircularProgress />
+        </Box>
+      )}
       <Box>
         {blogs.map((blog) => (
           <Paper sx={{ my: 3, p: 2 }} key={blog._id}>
