@@ -1,18 +1,15 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import useAuth from "../../../Hooks/useAuth";
 
-const MyExperience = () => {
+const AllBlogPosts = () => {
   const Swal = require("sweetalert2");
   const [orders, setOrders] = useState([]);
   console.log(orders);
-  const { user } = useAuth();
-
   useEffect(() => {
-    fetch(`http://localhost:5000/getMyExperiencePost/${user.email}`)
+    fetch(`http://localhost:5000/getAllBlogPost`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
-  }, [user.email]);
+  }, []);
 
   const handleDeleteOrder = (id) => {
     Swal.fire({
@@ -59,7 +56,7 @@ const MyExperience = () => {
           py: 5,
         }}
       >
-        My Experience
+        All Blog Posts
       </Typography>
       {orders.length === 0 && (
         <Typography
@@ -99,15 +96,17 @@ const MyExperience = () => {
               <img width="100px" src={order.img} alt="" />
               <Typography>{order.name}</Typography>
               <Typography sx={{}}>
-                <span
-                  style={{
-                    background: "#EFF0F5",
-                    padding: "5px 8px",
-                    borderRadius: "50px",
-                  }}
-                >
-                  {order.status}
-                </span>
+                {order.status === "approved" ? (
+                  "Approved"
+                ) : (
+                  <Button
+                    color="info"
+                    variant="contained"
+                    // onClick={() => handleStatusUpdate(order._id)}
+                  >
+                    Approved
+                  </Button>
+                )}
               </Typography>
               <Typography>
                 <Button
@@ -127,4 +126,4 @@ const MyExperience = () => {
   );
 };
 
-export default MyExperience;
+export default AllBlogPosts;

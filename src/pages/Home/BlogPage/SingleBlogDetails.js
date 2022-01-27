@@ -16,7 +16,7 @@ const SingleBlogDetails = () => {
       .then((data) => setBlog(data));
   }, [id]);
   return (
-    <>
+    <Box  sx={{ pt: 5 }}>
       <Navigation />
       <Container sx={{ py: 5 }}>
         <Grid container spacing={4}>
@@ -56,7 +56,7 @@ const SingleBlogDetails = () => {
         </Grid>
       </Container>
       <Footer />
-    </>
+    </Box>
   );
 };
 

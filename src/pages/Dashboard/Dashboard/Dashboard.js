@@ -74,7 +74,7 @@ export default function Dashboard() {
               </ListItem>
             </Link>
             <Link
-              to="/dashboard/myExperience"
+              to="/dashboard/allBlogPosts"
               style={{ textDecoration: "none", color: "black" }}
             >
               <ListItem button>
@@ -85,7 +85,7 @@ export default function Dashboard() {
               </ListItem>
             </Link>
             <Link
-              to="/dashboard/myExperience"
+              to="/dashboard/createBlogPost"
               style={{ textDecoration: "none", color: "black" }}
             >
               <ListItem button>

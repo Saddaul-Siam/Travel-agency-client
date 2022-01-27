@@ -1,29 +1,22 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import PropTypes from "prop-types";
+import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { Link } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
+import { Link, NavLink } from "react-router-dom";
+import { Button, Container, Fab, Zoom } from "@mui/material";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Slide from "@mui/material/Slide";
+import PropTypes from "prop-types";
+import { makeStyles } from "@mui/styles";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
-import {
-  Button,
-  Container,
-  Fab,
-  Slide,
-  useScrollTrigger,
-  Zoom,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import useAuth from "../../../Hooks/useAuth";
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -42,6 +35,7 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
   window: PropTypes.func,
 };
+
 function ScrollTop(props) {
   const { children, window } = props;
   const trigger = useScrollTrigger({
@@ -52,7 +46,7 @@ function ScrollTop(props) {
 
   const handleClick = (event) => {
     const anchor = (event.target.ownerDocument || document).querySelector(
-      "#top"
+      "#back-to-top"
     );
 
     if (anchor) {
@@ -80,10 +74,18 @@ ScrollTop.propTypes = {
   children: PropTypes.element.isRequired,
   window: PropTypes.func,
 };
-export default function Navigation(props) {
-  const { logOut, user } = useAuth();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+const Navigation = (props) => {
+  const useStyle = makeStyles({
+    navbarColor: {
+      backgroundColor: "#303030 !important",
+      padding: "5px 0",
+    },
+  });
+  const { navbarColor } = useStyle();
+  const { user, logOut } = useAuth();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -106,6 +108,7 @@ export default function Navigation(props) {
   };
 
   const menuId = "primary-search-account-menu";
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -122,8 +125,25 @@ export default function Navigation(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {user?.email && (
+          <MenuItem onClick={handleMenuClose}>{user.displayName}</MenuItem>
+        )}
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {user?.email && (
+          <MenuItem onClick={handleMenuClose}>{user.email}</MenuItem>
+        )}
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {user?.email && (
+          <MenuItem onClick={handleMenuClose}>
+            <Button color="primary" onClick={logOut}>
+              Log Out
+            </Button>
+          </MenuItem>
+        )}
+      </Box>
     </Menu>
   );
 
@@ -144,101 +164,130 @@ export default function Navigation(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      {user.email && (
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            {user.photoURL ? (
+              <Avatar alt="profile" src={user?.photoURL} />
+            ) : (
+              <AccountCircle />
+            )}
+          </IconButton>
+          <span>Profile</span>
+        </MenuItem>
+      )}
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <Link style={{ textDecoration: "none", color: "black" }} to="/home">
+          <Button color="inherit">Home</Button>
+        </Link>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <Link style={{ textDecoration: "none", color: "black" }} to="/explore">
+          <Button color="inherit">Explore</Button>
+        </Link>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+
+      {user?.email && (
+        <MenuItem>
+          {" "}
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            to="/dashboard"
+          >
+            <Button color="inherit">Add Experience</Button>
+          </Link>{" "}
+        </MenuItem>
+      )}
+
+      {user.email ? (
+        ""
+      ) : (
+        <MenuItem>
+          <Link style={{ textDecoration: "none", color: "black" }} to="/login">
+            <Button color="inherit">Login</Button>
+          </Link>
+        </MenuItem>
+      )}
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar className={navbarColor}>
           <Container>
-            <Toolbar sx={{ p: "0 !important" }} id="top">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
-              >
-                TRAVEL AGENCY
+            <Toolbar sx={{ p: "0 !important" }}>
+              <Typography variant="h6" noWrap component="div">
+                <NavLink
+                  style={{ textDecoration: "none", color: "white" }}
+                  to="/"
+                >
+                  DRONE BANGLADESH
+                </NavLink>
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <Link to="/dashboard/addExperience">
-                  <IconButton color="inherit">Add Experience</IconButton>
-                </Link>
-                <Link to="/login">
-                  <IconButton color="inherit">login</IconButton>
-                </Link>
-                <Link to="/register">
-                  <IconButton color="inherit">register</IconButton>
-                </Link>
-                <Button onClick={logOut} color="inherit">
-                  logout
+                <Button color="primary">
+                  <Link
+                    style={{ textDecoration: "none", color: "white" }}
+                    to="/home"
+                  >
+                    Home
+                  </Link>
                 </Button>
-                {user.email && (
-                  <Button color="inherit">{user.displayName}</Button>
+                <Button color="primary">
+                  <Link
+                    style={{ textDecoration: "none", color: "white" }}
+                    to="/explore"
+                  >
+                    Explore
+                  </Link>
+                </Button>
+                {user?.email && (
+                  <Button color="primary">
+                    <Link
+                      style={{ textDecoration: "none", color: "white" }}
+                      to="/dashboard/addExperience"
+                    >
+                      Add Experience
+                    </Link>
+                  </Button>
                 )}
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                >
-                  <Badge badgeContent={4} color="error">
-                    <MailIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                >
-                  <Badge badgeContent={17} color="error">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
-                  size="large"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                {user.email ? (
+                  ""
+                ) : (
+                  <Button color="primary">
+                    <Link
+                      style={{ textDecoration: "none", color: "white" }}
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                  </Button>
+                )}
+                {user.email && (
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    {user.photoURL ? (
+                      <Avatar alt="profile" src={user?.photoURL} />
+                    ) : (
+                      <AccountCircle />
+                    )}
+                  </IconButton>
+                )}
               </Box>
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <IconButton
@@ -249,20 +298,26 @@ export default function Navigation(props) {
                   onClick={handleMobileMenuOpen}
                   color="inherit"
                 >
-                  <MoreIcon />
+                  <MenuIcon />
                 </IconButton>
               </Box>
             </Toolbar>
           </Container>
-          <ScrollTop {...props}>
-            <Fab color="secondary" size="small" aria-label="scroll back to top">
-              <KeyboardArrowUpIcon />
-            </Fab>
-          </ScrollTop>
         </AppBar>
       </HideOnScroll>
+      <ScrollTop {...props}>
+        <Fab
+          sx={{ background: "#FF3987", color: "#FFFFFF" }}
+          color="primary"
+          size="small"
+          aria-label="scroll back to top"
+        >
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
       {renderMobileMenu}
       {renderMenu}
     </Box>
   );
-}
+};
+export default Navigation;

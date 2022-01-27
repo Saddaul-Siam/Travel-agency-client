@@ -13,7 +13,7 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Header = () => {
   return (
-    <Box>
+    <Box id="back-to-top">
       <Swiper
         grabCursor={true}
         // centeredSlides={true}

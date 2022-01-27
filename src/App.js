@@ -9,6 +9,8 @@ import AddExperience from "./pages/Dashboard/AddExperience/AddExperience";
 import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
 import MyExperience from "./pages/Dashboard/MyExperience/MyExperience";
 import MakeAdmin from "./pages/Dashboard/MakeAdmin/MakeAdmin";
+import CreateBlogPost from "./pages/Dashboard/CreateBlogPost/CreateBlogPost";
+import AllBlogPosts from "./pages/Dashboard/AllBlogPosts/AllBlogPosts";
 
 function App() {
   return (
@@ -27,6 +29,11 @@ function App() {
             />
             <Route path="/dashboard/myExperience" element={<MyExperience />} />
             <Route path="/dashboard/makeAdmin" element={<MakeAdmin />} />
+            <Route
+              path="/dashboard/createBlogPost"
+              element={<CreateBlogPost />}
+            />
+            <Route path="/dashboard/allBlogPosts" element={<AllBlogPosts />} />
           </Route>
         </Routes>
       </BrowserRouter>
