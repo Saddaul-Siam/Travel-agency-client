@@ -11,6 +11,7 @@ import MyExperience from "./pages/Dashboard/MyExperience/MyExperience";
 import MakeAdmin from "./pages/Dashboard/MakeAdmin/MakeAdmin";
 import CreateBlogPost from "./pages/Dashboard/CreateBlogPost/CreateBlogPost";
 import AllBlogPosts from "./pages/Dashboard/AllBlogPosts/AllBlogPosts";
+import UpdateBlog from "./pages/Dashboard/UpdateBlog/UpdateBlog";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               element={<CreateBlogPost />}
             />
             <Route path="/dashboard/allBlogPosts" element={<AllBlogPosts />} />
+            <Route path="/dashboard/updateBlog/:id" element={<UpdateBlog />} />
           </Route>
         </Routes>
       </BrowserRouter>

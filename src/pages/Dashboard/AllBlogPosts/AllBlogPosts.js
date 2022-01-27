@@ -1,7 +1,9 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AllBlogPosts = () => {
+  const navigate = useNavigate();
   const Swal = require("sweetalert2");
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
@@ -139,7 +141,7 @@ const AllBlogPosts = () => {
                 <Button
                   color="success"
                   variant="outlined"
-                  onClick={() => handleDeleteOrder(blog._id)}
+                  onClick={() => navigate(`/dashboard/updateBlog/${blog._id}`)}
                 >
                   Update
                 </Button>
