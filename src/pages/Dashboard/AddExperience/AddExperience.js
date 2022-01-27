@@ -24,7 +24,7 @@ const AddExperience = ({ approved }) => {
   const onSubmit = (data) => {
     data.userEmail = user.email;
     data.status = approved || "pending";
-    fetch(`http://localhost:5000/addBlogPost`, {
+    fetch(`https://doctors-portal-24.herokuapp.com/addBlogPost`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),

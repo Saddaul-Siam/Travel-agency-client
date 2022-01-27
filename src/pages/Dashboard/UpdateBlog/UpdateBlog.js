@@ -17,13 +17,13 @@ const UpdateBlog = () => {
   } = useForm();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/getSingleBlogPost/${id}`)
+    fetch(`https://doctors-portal-24.herokuapp.com/getSingleBlogPost/${id}`)
       .then((result) => result.json())
       .then((data) => setBlog(data));
   }, [id]);
 
   const onSubmit = (data) => {
-    fetch(`http://localhost:5000/updateBlog/${id}`, {
+    fetch(`https://doctors-portal-24.herokuapp.com/updateBlog/${id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
@@ -38,7 +38,9 @@ const UpdateBlog = () => {
             title: "Blog update successful",
           }).then((result) => {
             if (result.isConfirmed) {
-              fetch(`http://localhost:5000/getSingleBlogPost/${id}`)
+              fetch(
+                `https://doctors-portal-24.herokuapp.com/getSingleBlogPost/${id}`
+              )
                 .then((result) => result.json())
                 .then((data) => setBlog(data));
             }

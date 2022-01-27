@@ -19,7 +19,9 @@ const Blogs = () => {
   const [page, setPage] = useState(0);
   const size = 10;
   useEffect(() => {
-    fetch(`http://localhost:5000/blogs?page=${page}&&size=${size}`)
+    fetch(
+      `https://doctors-portal-24.herokuapp.com/blogs?page=${page}&&size=${size}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setBlogs(data.blogs);

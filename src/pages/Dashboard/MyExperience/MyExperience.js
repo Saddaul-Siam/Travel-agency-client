@@ -17,7 +17,9 @@ const MyExperience = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/getMyExperiencePost/${user.email}`)
+    fetch(
+      `https://doctors-portal-24.herokuapp.com/getMyExperiencePost/${user.email}`
+    )
       .then((res) => res.json())
       .then((data) => setBlogs(data));
   }, [user.email]);
@@ -34,7 +36,7 @@ const MyExperience = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/blogs/${id}`, {
+        fetch(`https://doctors-portal-24.herokuapp.com/blogs/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,

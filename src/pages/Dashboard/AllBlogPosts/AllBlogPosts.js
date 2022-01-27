@@ -14,7 +14,7 @@ const AllBlogPosts = () => {
   const Swal = require("sweetalert2");
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/getAllBlogPost`)
+    fetch(`https://doctors-portal-24.herokuapp.com/getAllBlogPost`)
       .then((res) => res.json())
       .then((data) => setBlogs(data));
   }, []);
@@ -31,7 +31,7 @@ const AllBlogPosts = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/deleteBlogPost/${id}`, {
+        fetch(`https://doctors-portal-24.herokuapp.com/deleteBlogPost/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,
@@ -48,7 +48,9 @@ const AllBlogPosts = () => {
                 title: " blogs remove successful",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  fetch(`http://localhost:5000/getAllBlogPost`)
+                  fetch(
+                    `https://doctors-portal-24.herokuapp.com/getAllBlogPost`
+                  )
                     .then((res) => res.json())
                     .then((data) => setBlogs(data));
                 }
@@ -63,7 +65,7 @@ const AllBlogPosts = () => {
       id: id,
       status: "approved",
     };
-    fetch("http://localhost:5000/blogStatusUpdate", {
+    fetch("https://doctors-portal-24.herokuapp.com/blogStatusUpdate", {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(status),
@@ -77,7 +79,7 @@ const AllBlogPosts = () => {
             title: "Blog approved successful",
           }).then((result) => {
             if (result.isConfirmed) {
-              fetch(`http://localhost:5000/getAllBlogPost`)
+              fetch(`https://doctors-portal-24.herokuapp.com/getAllBlogPost`)
                 .then((res) => res.json())
                 .then((data) => setBlogs(data));
             }

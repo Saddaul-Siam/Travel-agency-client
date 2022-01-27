@@ -11,12 +11,12 @@ const SingleBlogDetails = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState({});
   useEffect(() => {
-    fetch(`http://localhost:5000/getSingleBlogPost/${id}`)
+    fetch(`https://doctors-portal-24.herokuapp.com/getSingleBlogPost/${id}`)
       .then((result) => result.json())
       .then((data) => setBlog(data));
   }, [id]);
   return (
-    <Box  sx={{ pt: 5 }}>
+    <Box sx={{ pt: 5 }}>
       <Navigation />
       <Container sx={{ py: 5 }}>
         <Grid container spacing={4}>
