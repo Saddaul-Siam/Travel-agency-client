@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
   Alert,
+  Box,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
@@ -40,7 +41,14 @@ const Register = () => {
       navigate("/");
     }
   }, [user.emailVerified, navigate]);
-
+  const showPass = () => {
+    const x = document.getElementById("myInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  };
   return (
     <>
       <Navigation></Navigation>
@@ -72,7 +80,7 @@ const Register = () => {
                 />
                 <TextField
                   sx={{ width: "75%", m: 1 }}
-                  id="standard-basic"
+                  id="myInput"
                   label="Your Password"
                   type="password"
                   name="password"
@@ -81,13 +89,17 @@ const Register = () => {
                 />
                 <TextField
                   sx={{ width: "75%", m: 1 }}
-                  id="standard-basic"
+                  id="myInput"
                   label="ReType Your Password"
                   type="password"
                   name="password2"
                   onBlur={handleOnBlur}
                   variant="standard"
                 />
+                <Box sx={{ my: 1 }}>
+                  <input type="checkbox" onClick={showPass} />
+                  Show Password
+                </Box>
                 <Button
                   sx={{ width: "75%", m: 1 }}
                   type="submit"

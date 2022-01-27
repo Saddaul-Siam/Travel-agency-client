@@ -13,6 +13,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Navigation from "../../Shared/Navigation/Navigation";
 import useAuth from "../../../Hooks/useAuth";
 import Divider from "@mui/material/Divider";
+import { Box } from "@mui/system";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
@@ -36,7 +37,14 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle(location, navigate);
   };
-
+  const showPass = () => {
+    const x = document.getElementById("myInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  };
   return (
     <>
       <Navigation></Navigation>
@@ -49,7 +57,6 @@ const Login = () => {
             <form onSubmit={handleLoginSubmit}>
               <TextField
                 sx={{ width: "75%", m: 1 }}
-                id="standard-basic"
                 label="Your Email"
                 name="email"
                 onChange={handleOnChange}
@@ -58,14 +65,17 @@ const Login = () => {
               />
               <TextField
                 sx={{ width: "75%", m: 1 }}
-                id="standard-basic"
                 label="Your Password"
                 type="password"
                 name="password"
                 onChange={handleOnChange}
                 variant="standard"
+                id="myInput"
               />
-
+              <Box sx={{ my: 1 }}>
+                <input type="checkbox" onClick={showPass} />
+                Show Password
+              </Box>
               <Button
                 sx={{ width: "75%", m: 1 }}
                 type="submit"
