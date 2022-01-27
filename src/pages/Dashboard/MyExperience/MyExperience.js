@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
@@ -27,7 +20,7 @@ const MyExperience = () => {
   const handleDeleteBlogs = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: " The customer paid for it",
+      // text: " The customer paid for it",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -36,7 +29,7 @@ const MyExperience = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://doctors-portal-24.herokuapp.com/blogs/${id}`, {
+        fetch(`https://doctors-portal-24.herokuapp.com/deleteBlogPost/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,
@@ -45,12 +38,19 @@ const MyExperience = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             if (data.acknowledged) {
               Swal.fire({
                 position: "center",
                 icon: "success",
                 title: " blogs remove successful",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  fetch(
+                    `https://doctors-portal-24.herokuapp.com/getMyExperiencePost/${user.email}`
+                  )
+                    .then((res) => res.json())
+                    .then((data) => setBlogs(data));
+                }
               });
             }
           });
@@ -84,13 +84,6 @@ const MyExperience = () => {
         >
           Available blogs : {blogs.length}
         </Typography>
-      )}
-      {blogs.length ? (
-        ""
-      ) : (
-        <Box sx={{ display: "flex", justifyContent: "center", pt: 5 }}>
-          <CircularProgress />
-        </Box>
       )}
       <Box>
         {blogs.map((blog) => (

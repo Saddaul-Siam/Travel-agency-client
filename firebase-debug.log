@@ -1,0 +1,13 @@
+[debug] [2022-01-27T12:53:13.230Z] ----------------------------------------------------------------------
+[debug] [2022-01-27T12:53:13.231Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\sadda\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-01-27T12:53:13.232Z] CLI Version:   10.1.2
+[debug] [2022-01-27T12:53:13.232Z] Platform:      win32
+[debug] [2022-01-27T12:53:13.232Z] Node Version:  v16.13.2
+[debug] [2022-01-27T12:53:13.233Z] Time:          Thu Jan 27 2022 18:53:13 GMT+0600 (Bangladesh Standard Time)
+[debug] [2022-01-27T12:53:13.233Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-01-27T12:53:13.278Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-01-27T12:53:13.278Z] > authorizing via signed-in user (saddadul.siam@gmail.com)
+[debug] [2022-01-27T12:53:13.278Z] [iam] checking project travel-agency-24 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-01-27T12:53:13.280Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/travel-agency-24:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}

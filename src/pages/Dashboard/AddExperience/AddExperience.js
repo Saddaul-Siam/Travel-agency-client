@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import useAuth from "../../../Hooks/useAuth";
 
 const AddExperience = ({ approved }) => {
+  const Swal = require("sweetalert2");
   const { user, admin } = useAuth();
   console.log(admin);
   const {
@@ -32,6 +33,11 @@ const AddExperience = ({ approved }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Experience added successful",
+          });
           reset();
         }
       });

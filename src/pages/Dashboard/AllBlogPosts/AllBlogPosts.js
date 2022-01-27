@@ -22,7 +22,7 @@ const AllBlogPosts = () => {
   const handleDeleteBlogs = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: " The customer paid for it",
+      // text: " The customer paid for it",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

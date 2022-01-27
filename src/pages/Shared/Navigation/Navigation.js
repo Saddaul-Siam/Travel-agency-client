@@ -195,13 +195,12 @@ const Navigation = (props) => {
 
       {user?.email && (
         <MenuItem>
-          {" "}
           <Link
             style={{ textDecoration: "none", color: "black" }}
-            to="/dashboard"
+            to="/dashboard/addExperience"
           >
             <Button color="inherit">Add Experience</Button>
-          </Link>{" "}
+          </Link>
         </MenuItem>
       )}
 
@@ -265,7 +264,7 @@ const Navigation = (props) => {
                   <Button color="primary">
                     <Link
                       style={{ textDecoration: "none", color: "white" }}
-                      to="/dashboard/addExperience"
+                      to="/dashboard/allBlogPosts"
                     >
                       Dashboard
                     </Link>
