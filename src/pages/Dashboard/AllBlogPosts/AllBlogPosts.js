@@ -3,12 +3,11 @@ import React, { useEffect, useState } from "react";
 
 const AllBlogPosts = () => {
   const Swal = require("sweetalert2");
-  const [orders, setOrders] = useState([]);
-  console.log(orders);
+  const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     fetch(`http://localhost:5000/getAllBlogPost`)
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data) => setBlogs(data));
   }, []);
 
   const handleDeleteOrder = (id) => {
@@ -23,7 +22,7 @@ const AllBlogPosts = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://glacial-earth-17759.herokuapp.com/order/${id}`, {
+        fetch(`http://localhost:5000/deleteBlogPost/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,
@@ -44,6 +43,34 @@ const AllBlogPosts = () => {
       }
     });
   };
+  const handleStatusUpdate = (id) => {
+    const status = {
+      id: id,
+      status: "approved",
+    };
+    fetch("http://localhost:5000/blogStatusUpdate", {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(status),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Blog approved successful",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              fetch(`http://localhost:5000/getAllBlogPost`)
+                .then((res) => res.json())
+                .then((data) => setBlogs(data));
+            }
+          });
+        }
+      });
+  };
+
   return (
     <Container>
       <Typography
@@ -58,7 +85,7 @@ const AllBlogPosts = () => {
       >
         All Blog Posts
       </Typography>
-      {orders.length === 0 && (
+      {blogs.length === 0 && (
         <Typography
           variant="h6"
           sx={{
@@ -69,23 +96,23 @@ const AllBlogPosts = () => {
             p2: 5,
           }}
         >
-          Available Order : {orders.length}
+          Available Order : {blogs.length}
         </Typography>
       )}
 
       <Box>
-        {orders.map((order) => (
-          <Paper sx={{ my: 3, p: 2 }} key={order._id}>
+        {blogs.map((blog) => (
+          <Paper sx={{ my: 3, p: 2 }} key={blog._id}>
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}
             >
               <Typography>
-                Order <span style={{ color: "orange" }}># {order._id}</span>
+                Order <span style={{ color: "orange" }}># {blog._id}</span>
               </Typography>
               <Button
                 color="error"
                 variant="outlined"
-                onClick={() => handleDeleteOrder(order._id)}
+                onClick={() => handleDeleteOrder(blog._id)}
               >
                 Remove Post
               </Button>
@@ -93,16 +120,16 @@ const AllBlogPosts = () => {
             <Box
               sx={{ display: "flex", justifyContent: "space-around", my: 2 }}
             >
-              <img width="100px" src={order.img} alt="" />
-              <Typography>{order.name}</Typography>
+              <img width="100px" src={blog.img} alt="" />
+              <Typography>{blog.name}</Typography>
               <Typography sx={{}}>
-                {order.status === "approved" ? (
+                {blog.status === "approved" ? (
                   "Approved"
                 ) : (
                   <Button
                     color="info"
                     variant="contained"
-                    // onClick={() => handleStatusUpdate(order._id)}
+                    onClick={() => handleStatusUpdate(blog._id)}
                   >
                     Approved
                   </Button>
@@ -112,12 +139,12 @@ const AllBlogPosts = () => {
                 <Button
                   color="success"
                   variant="outlined"
-                  onClick={() => handleDeleteOrder(order._id)}
+                  onClick={() => handleDeleteOrder(blog._id)}
                 >
                   Update
                 </Button>
               </Typography>
-              <Typography>{order.payment && "Paid"}</Typography>
+              <Typography>{blog.payment && "Paid"}</Typography>
             </Box>
           </Paper>
         ))}

@@ -26,7 +26,7 @@ const MyExperience = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://glacial-earth-17759.herokuapp.com/order/${id}`, {
+        fetch(`http://localhost:5000/order/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,
