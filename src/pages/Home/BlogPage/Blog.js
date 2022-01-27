@@ -9,7 +9,7 @@ export default function Blog({ blog }) {
       <Paper>
         <img width="100%" height="300px" src={blog.img} alt="" />
         <Box sx={{ m: 3, pb: 3 }}>
-          <Typography sx={{ fontWeight: 700, fontSize: "20px" }}>
+          <Typography sx={{ fontWeight: 500, fontSize: "20px" }}>
             {blog.name}
           </Typography>
         </Box>

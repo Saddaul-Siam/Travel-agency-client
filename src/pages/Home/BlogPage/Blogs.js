@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
-  console.log(blogs);
   const [pageCount, setPageCount] = useState(0);
   const [page, setPage] = useState(0);
   const size = 10;
