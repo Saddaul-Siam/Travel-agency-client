@@ -4,14 +4,13 @@ import useAuth from "../../../Hooks/useAuth";
 
 const MyExperience = () => {
   const Swal = require("sweetalert2");
-  const [orders, setOrders] = useState([]);
-  console.log(orders);
+  const [blogs, setBlogs] = useState([]);
   const { user } = useAuth();
 
   useEffect(() => {
     fetch(`http://localhost:5000/getMyExperiencePost/${user.email}`)
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data) => setBlogs(data));
   }, [user.email]);
 
   const handleDeleteOrder = (id) => {
@@ -61,7 +60,7 @@ const MyExperience = () => {
       >
         My Experience
       </Typography>
-      {orders.length === 0 && (
+      {blogs.length === 0 && (
         <Typography
           variant="h6"
           sx={{
@@ -72,23 +71,23 @@ const MyExperience = () => {
             p2: 5,
           }}
         >
-          Available Order : {orders.length}
+          Available Order : {blogs.length}
         </Typography>
       )}
 
       <Box>
-        {orders.map((order) => (
-          <Paper sx={{ my: 3, p: 2 }} key={order._id}>
+        {blogs.map((blog) => (
+          <Paper sx={{ my: 3, p: 2 }} key={blog._id}>
             <Box
               sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}
             >
               <Typography>
-                Order <span style={{ color: "orange" }}># {order._id}</span>
+                Order <span style={{ color: "orange" }}># {blog._id}</span>
               </Typography>
               <Button
                 color="error"
                 variant="outlined"
-                onClick={() => handleDeleteOrder(order._id)}
+                onClick={() => handleDeleteOrder(blog._id)}
               >
                 Remove Post
               </Button>
@@ -96,8 +95,8 @@ const MyExperience = () => {
             <Box
               sx={{ display: "flex", justifyContent: "space-around", my: 2 }}
             >
-              <img width="100px" src={order.img} alt="" />
-              <Typography>{order.name}</Typography>
+              <img width="100px" src={blog.img} alt="" />
+              <Typography>{blog.name}</Typography>
               <Typography sx={{}}>
                 <span
                   style={{
@@ -106,19 +105,19 @@ const MyExperience = () => {
                     borderRadius: "50px",
                   }}
                 >
-                  {order.status}
+                  {blog.status}
                 </span>
               </Typography>
               <Typography>
                 <Button
                   color="success"
                   variant="outlined"
-                  onClick={() => handleDeleteOrder(order._id)}
+                  onClick={() => handleDeleteOrder(blog._id)}
                 >
                   Update
                 </Button>
               </Typography>
-              <Typography>{order.payment && "Paid"}</Typography>
+              <Typography>{blog.payment && "Paid"}</Typography>
             </Box>
           </Paper>
         ))}

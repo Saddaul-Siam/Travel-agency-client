@@ -6,12 +6,6 @@ import Blog from "./Blog";
 import { Link } from "react-router-dom";
 
 const Blogs = () => {
-  /*   const [blogs, setBlogs] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/getAllBlogPost`)
-      .then((res) => res.json())
-      .then((data) => setBlogs(data));
-  }, []); */
   const [blogs, setBlogs] = useState([]);
   console.log(blogs);
   const [pageCount, setPageCount] = useState(0);
