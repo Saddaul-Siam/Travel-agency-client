@@ -12,10 +12,16 @@ import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link, Outlet } from "react-router-dom";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
+import useAuth from "../../../Hooks/useAuth";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const drawerWidth = 240;
 
 export default function Dashboard() {
+  const { logOut, user, admin } = useAuth();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -51,61 +57,77 @@ export default function Dashboard() {
                 <ListItemText>Home</ListItemText>
               </ListItem>
             </Link>
-            <Link
-              to="/dashboard/addExperience"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <DepartureBoardIcon />
-                </ListItemIcon>
-                <ListItemText>Add Experience</ListItemText>
-              </ListItem>
-            </Link>
-            <Link
-              to="/dashboard/myExperience"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <DepartureBoardIcon />
-                </ListItemIcon>
-                <ListItemText>My Experience</ListItemText>
-              </ListItem>
-            </Link>
-            <Link
-              to="/dashboard/allBlogPosts"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <DepartureBoardIcon />
-                </ListItemIcon>
-                <ListItemText>All Blog Posts</ListItemText>
-              </ListItem>
-            </Link>
-            <Link
-              to="/dashboard/createBlogPost"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <DepartureBoardIcon />
-                </ListItemIcon>
-                <ListItemText>Create Blog Posts</ListItemText>
-              </ListItem>
-            </Link>
-            <Link
-              to="/dashboard/makeAdmin"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <ListItem button>
-                <ListItemIcon>
-                  <DepartureBoardIcon />
-                </ListItemIcon>
-                <ListItemText>Make Admin</ListItemText>
-              </ListItem>
-            </Link>
+            {admin ? (
+              ""
+            ) : (
+              <Box>
+                <Link
+                  to="/dashboard/addExperience"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PostAddIcon />
+                    </ListItemIcon>
+                    <ListItemText>Add Experience</ListItemText>
+                  </ListItem>
+                </Link>
+                <Link
+                  to="/dashboard/myExperience"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <DepartureBoardIcon />
+                    </ListItemIcon>
+                    <ListItemText>My Experience</ListItemText>
+                  </ListItem>
+                </Link>
+              </Box>
+            )}
+            {user.email && admin && (
+              <Box>
+                <Link
+                  to="/dashboard/allBlogPosts"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <DynamicFeedIcon />
+                    </ListItemIcon>
+                    <ListItemText>All Blog Posts</ListItemText>
+                  </ListItem>
+                </Link>
+                <Link
+                  to="/dashboard/createBlogPost"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PostAddIcon />
+                    </ListItemIcon>
+                    <ListItemText>Create Blog Posts</ListItemText>
+                  </ListItem>
+                </Link>
+                <Link
+                  to="/dashboard/makeAdmin"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <ListItem button>
+                    <ListItemIcon>
+                      <AddTaskIcon />
+                    </ListItemIcon>
+                    <ListItemText>Make Admin</ListItemText>
+                  </ListItem>
+                </Link>
+              </Box>
+            )}
+            <ListItem button onClick={logOut}>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText>LogOut</ListItemText>
+            </ListItem>
           </List>
         </Box>
       </Drawer>

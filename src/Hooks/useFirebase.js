@@ -52,13 +52,13 @@ const useFirebase = () => {
   };
 
   // login user
-  const loginUser = (email, password, location, history) => {
+  const loginUser = (email, password, location, navigate) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setAuthError("");
         const destination = location?.state?.from || "/";
-        history.replace(destination);
+        navigate(destination);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -133,7 +133,7 @@ const useFirebase = () => {
   };
 
   useEffect(() => {
-    fetch(`https://bike-buzz.herokuapp.com/users/${user.email}`)
+    fetch(`http://localhost:5000/users/${user.email}`)
       .then((res) => res.json())
       .then((data) => setAdmin(data.admin));
   }, [user.email]);

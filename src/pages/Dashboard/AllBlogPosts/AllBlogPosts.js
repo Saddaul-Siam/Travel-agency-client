@@ -12,7 +12,7 @@ const AllBlogPosts = () => {
       .then((data) => setBlogs(data));
   }, []);
 
-  const handleDeleteOrder = (id) => {
+  const handleDeleteBlogs = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: " The customer paid for it",
@@ -20,7 +20,7 @@ const AllBlogPosts = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, remove order ",
+      confirmButtonText: "Yes, remove blogs ",
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -38,7 +38,13 @@ const AllBlogPosts = () => {
               Swal.fire({
                 position: "center",
                 icon: "success",
-                title: " Order remove successful",
+                title: " blogs remove successful",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  fetch(`http://localhost:5000/getAllBlogPost`)
+                    .then((res) => res.json())
+                    .then((data) => setBlogs(data));
+                }
               });
             }
           });
@@ -98,7 +104,7 @@ const AllBlogPosts = () => {
             p2: 5,
           }}
         >
-          Available Order : {blogs.length}
+          Available blogs : {blogs.length}
         </Typography>
       )}
 
@@ -109,12 +115,12 @@ const AllBlogPosts = () => {
               sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}
             >
               <Typography>
-                Order <span style={{ color: "orange" }}># {blog._id}</span>
+                blogs <span style={{ color: "orange" }}># {blog._id}</span>
               </Typography>
               <Button
                 color="error"
                 variant="outlined"
-                onClick={() => handleDeleteOrder(blog._id)}
+                onClick={() => handleDeleteBlogs(blog._id)}
               >
                 Remove Post
               </Button>

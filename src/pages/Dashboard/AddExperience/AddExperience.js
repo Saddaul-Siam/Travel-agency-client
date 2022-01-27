@@ -12,7 +12,8 @@ import { Box } from "@mui/system";
 import useAuth from "../../../Hooks/useAuth";
 
 const AddExperience = ({ approved }) => {
-  const { user } = useAuth();
+  const { user, admin } = useAuth();
+  console.log(admin);
   const {
     register,
     handleSubmit,
@@ -38,7 +39,18 @@ const AddExperience = ({ approved }) => {
 
   return (
     <Container sx={{ pb: 0 }}>
-      <h2>Add your own experience</h2>
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: "bold",
+          color: "#FF1493",
+          display: "flex",
+          justifyContent: "center",
+          pb: 3,
+        }}
+      >
+        Add your own experience
+      </Typography>
       <Paper sx={{ p: 3, backgroundColor: "#ECF0F3 !important" }} elevation={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField

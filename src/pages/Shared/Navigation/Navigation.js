@@ -83,7 +83,7 @@ const Navigation = (props) => {
     },
   });
   const { navbarColor } = useStyle();
-  const { user, logOut } = useAuth();
+  const { user, logOut, admin } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -228,7 +228,7 @@ const Navigation = (props) => {
                   style={{ textDecoration: "none", color: "white" }}
                   to="/"
                 >
-                  DRONE BANGLADESH
+                  TRAVEL AGENCY
                 </NavLink>
               </Typography>
               <Box sx={{ flexGrow: 1 }} />
@@ -249,13 +249,25 @@ const Navigation = (props) => {
                     Explore
                   </Link>
                 </Button>
-                {user?.email && (
+                {user?.email && admin ? (
+                  ""
+                ) : (
                   <Button color="primary">
                     <Link
                       style={{ textDecoration: "none", color: "white" }}
                       to="/dashboard/addExperience"
                     >
                       Add Experience
+                    </Link>
+                  </Button>
+                )}
+                {admin && (
+                  <Button color="primary">
+                    <Link
+                      style={{ textDecoration: "none", color: "white" }}
+                      to="/dashboard/addExperience"
+                    >
+                      Dashboard
                     </Link>
                   </Button>
                 )}

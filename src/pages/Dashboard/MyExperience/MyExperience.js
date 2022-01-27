@@ -1,8 +1,10 @@
 import { Box, Button, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 
 const MyExperience = () => {
+  const navigate = useNavigate();
   const Swal = require("sweetalert2");
   const [blogs, setBlogs] = useState([]);
   const { user } = useAuth();
@@ -13,7 +15,7 @@ const MyExperience = () => {
       .then((data) => setBlogs(data));
   }, [user.email]);
 
-  const handleDeleteOrder = (id) => {
+  const handleDeleteBlogs = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: " The customer paid for it",
@@ -21,11 +23,11 @@ const MyExperience = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, remove order ",
+      confirmButtonText: "Yes, remove blogs ",
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/order/${id}`, {
+        fetch(`http://localhost:5000/blogs/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("idToken")}`,
@@ -39,7 +41,7 @@ const MyExperience = () => {
               Swal.fire({
                 position: "center",
                 icon: "success",
-                title: " Order remove successful",
+                title: " blogs remove successful",
               });
             }
           });
@@ -71,7 +73,7 @@ const MyExperience = () => {
             p2: 5,
           }}
         >
-          Available Order : {blogs.length}
+          Available blogs : {blogs.length}
         </Typography>
       )}
 
@@ -82,12 +84,12 @@ const MyExperience = () => {
               sx={{ display: "flex", justifyContent: "space-between", mb: 5 }}
             >
               <Typography>
-                Order <span style={{ color: "orange" }}># {blog._id}</span>
+                blogs <span style={{ color: "orange" }}># {blog._id}</span>
               </Typography>
               <Button
                 color="error"
                 variant="outlined"
-                onClick={() => handleDeleteOrder(blog._id)}
+                onClick={() => handleDeleteBlogs(blog._id)}
               >
                 Remove Post
               </Button>
@@ -102,7 +104,7 @@ const MyExperience = () => {
                   style={{
                     background: "#EFF0F5",
                     padding: "5px 8px",
-                    borderRadius: "50px",
+                    bblogsRadius: "50px",
                   }}
                 >
                   {blog.status}
@@ -112,7 +114,7 @@ const MyExperience = () => {
                 <Button
                   color="success"
                   variant="outlined"
-                  onClick={() => handleDeleteOrder(blog._id)}
+                  onClick={() => navigate(`/dashboard/updateBlog/${blog._id}`)}
                 >
                   Update
                 </Button>

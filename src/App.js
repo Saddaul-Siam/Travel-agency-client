@@ -12,6 +12,8 @@ import MakeAdmin from "./pages/Dashboard/MakeAdmin/MakeAdmin";
 import CreateBlogPost from "./pages/Dashboard/CreateBlogPost/CreateBlogPost";
 import AllBlogPosts from "./pages/Dashboard/AllBlogPosts/AllBlogPosts";
 import UpdateBlog from "./pages/Dashboard/UpdateBlog/UpdateBlog";
+import PrivateRoute from "./pages/Login/PrivateRoute/PrivateRoute";
+import Explore from "./pages/Explore/Explore";
 
 function App() {
   return (
@@ -20,22 +22,73 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/blog/:id" element={<SingleBlogDetails />} />
+          <Route
+            path="/blog/:id"
+            element={
+              <PrivateRoute>
+                <SingleBlogDetails />
+              </PrivateRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/explore" element={<Explore />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
             <Route
               path="/dashboard/addExperience"
-              element={<AddExperience />}
+              element={
+                <PrivateRoute>
+                  <AddExperience />
+                </PrivateRoute>
+              }
             />
-            <Route path="/dashboard/myExperience" element={<MyExperience />} />
-            <Route path="/dashboard/makeAdmin" element={<MakeAdmin />} />
+            <Route
+              path="/dashboard/myExperience"
+              element={
+                <PrivateRoute>
+                  <MyExperience />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard/makeAdmin"
+              element={
+                <PrivateRoute>
+                  <MakeAdmin />
+                </PrivateRoute>
+              }
+            />
             <Route
               path="/dashboard/createBlogPost"
-              element={<CreateBlogPost />}
+              element={
+                <PrivateRoute>
+                  <CreateBlogPost />
+                </PrivateRoute>
+              }
             />
-            <Route path="/dashboard/allBlogPosts" element={<AllBlogPosts />} />
-            <Route path="/dashboard/updateBlog/:id" element={<UpdateBlog />} />
+            <Route
+              path="/dashboard/allBlogPosts"
+              element={
+                <PrivateRoute>
+                  <AllBlogPosts />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard/updateBlog/:id"
+              element={
+                <PrivateRoute>
+                  <UpdateBlog />
+                </PrivateRoute>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>
